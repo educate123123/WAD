@@ -1,0 +1,21 @@
+
+
+git init
+
+git config --global user.name "Your Name" 
+
+git config --global user.email "yourmail@gmail.com" 
+
+git add . 
+
+git status 
+
+git commit -m "First Commit"
+
+git remote add origin https://github.com/username/WAD_Practical3.git 
+
+git remote -v 
+
+git branch -M main
+
+git push -u origin main 
