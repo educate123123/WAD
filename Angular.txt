@@ -1,0 +1,485 @@
+================ ANGULAR USER REGISTRATION / LOGIN / PROFILE APPLICATION ================
+
+--------------------------------------------------
+STEP 1: INSTALL ANGULAR CLI
+--------------------------------------------------
+
+Open terminal and run:
+
+npm install -g @angular/cli
+
+Check Angular version:
+
+ng version
+
+--------------------------------------------------
+STEP 2: CREATE ANGULAR PROJECT
+--------------------------------------------------
+
+Run command:
+
+ng new user-app
+
+It will ask:
+
+Would you like to add Angular routing?
+
+Type:
+
+No
+
+Then ask:
+
+Which stylesheet format would you like to use?
+
+Choose:
+
+CSS
+
+--------------------------------------------------
+STEP 3: OPEN PROJECT
+--------------------------------------------------
+
+Move inside project folder:
+
+cd user-app
+
+Open project in VS Code:
+
+code .
+
+--------------------------------------------------
+STEP 4: RUN ANGULAR PROJECT
+--------------------------------------------------
+
+Run command:
+
+ng serve
+
+Open browser:
+
+http://localhost:4200
+
+--------------------------------------------------
+STEP 5: CREATE COMPONENTS
+--------------------------------------------------
+
+Run commands one by one:
+
+ng generate component register
+
+ng generate component login
+
+ng generate component profile
+
+Shortcut Commands:
+
+ng g c register
+
+ng g c login
+
+ng g c profile
+
+--------------------------------------------------
+FOLDER STRUCTURE / FILE ARCHITECTURE
+--------------------------------------------------
+
+user-app
+│
+├── src
+│   │
+│   ├── app
+│   │   │
+│   │   ├── register
+│   │   │   ├── register.html
+│   │   │   ├── register.ts
+│   │   │   └── register.css
+│   │   │
+│   │   ├── login
+│   │   │   ├── login.html
+│   │   │   ├── login.ts
+│   │   │   └── login.css
+│   │   │
+│   │   ├── profile
+│   │   │   ├── profile.html
+│   │   │   ├── profile.ts
+│   │   │   └── profile.css
+│   │   │
+│   │   ├── app.html
+│   │   ├── app.ts
+│   │   └── app.module.ts
+│   │
+│   └── index.html
+│
+└── package.json
+
+--------------------------------------------------
+STEP 6: UPDATE app.module.ts
+--------------------------------------------------
+
+File Path:
+
+src/app/app.ts
+
+Code:
+
+import { Component } from '@angular/core';
+
+import { RegisterComponent } from './register/register';
+import { LoginComponent } from './login/login';
+import { ProfileComponent } from './profile/profile';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+
+  imports: [
+    RegisterComponent,
+    LoginComponent,
+    ProfileComponent
+  ],
+
+  templateUrl: './app.html',
+  styleUrl: './app.css'
+})
+
+export class App {
+
+}
+--------------------------------------------------
+STEP 7: app.html
+--------------------------------------------------
+
+File Path:
+
+src/app/app.html
+
+Code:
+
+<h1>Angular User Application</h1>
+
+<hr>
+
+<app-register></app-register>
+
+<hr>
+
+<app-login></app-login>
+
+<hr>
+
+<app-profile></app-profile>
+
+--------------------------------------------------
+STEP 8: REGISTER COMPONENT
+--------------------------------------------------
+
+File:
+
+register.html
+
+Code:
+
+<h2>User Registration</h2>
+
+<form (ngSubmit)="registerUser()">
+
+    <label>Name:</label>
+    <input type="text" [(ngModel)]="name" name="name">
+
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="email" name="email">
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password" name="password">
+
+    <br><br>
+
+    <button type="submit">Register</button>
+
+</form>
+
+--------------------------------------------------
+
+File:
+
+register.ts
+
+Code:
+
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-register',
+
+  standalone: true,
+
+  imports: [FormsModule],
+
+  templateUrl: './register.html',
+  styleUrl: './register.css'
+})
+
+export class RegisterComponent {
+
+  name = '';
+  email = '';
+  password = '';
+
+  registerUser() {
+
+    let user = {
+      name: this.name,
+      email: this.email,
+      password: this.password
+    };
+
+    if (typeof window !== 'undefined') {
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Registration Successful");
+
+      window.location.reload();
+
+    }
+
+  }
+
+}
+--------------------------------------------------
+STEP 9: LOGIN COMPONENT
+--------------------------------------------------
+
+File:
+
+login.html
+
+Code:
+
+<h2>User Login</h2>
+
+<form (ngSubmit)="loginUser()">
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="email" name="email">
+
+    <br><br>
+
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password" name="password">
+
+    <br><br>
+
+    <button type="submit">Login</button>
+
+</form>
+--------------------------------------------------
+
+File:
+
+login.ts
+
+Code:
+
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './login.html',
+  styleUrl: './login.css'
+})
+
+export class LoginComponent {
+
+  email = '';
+  password = '';
+
+  loginUser() {
+
+    if (typeof window !== 'undefined') {
+
+      let storedUser = JSON.parse(localStorage.getItem("user") || '{}');
+
+      if (
+        this.email === storedUser.email &&
+        this.password === storedUser.password
+      ) {
+
+        alert("Login Successful");
+
+      } else {
+
+        alert("Invalid Email or Password");
+
+      }
+
+    }
+
+  }
+
+}
+--------------------------------------------------
+STEP 10: PROFILE COMPONENT
+--------------------------------------------------
+
+File:
+
+profile.html
+
+Code:
+
+<h2>User Profile</h2>
+
+<div *ngIf="user">
+
+    <p><b>Name:</b> {{user.name}}</p>
+
+    <p><b>Email:</b> {{user.email}}</p>
+
+    <p><b>Password:</b> {{user.password}}</p>
+
+</div>
+
+--------------------------------------------------
+
+File:
+
+profile.ts
+
+Code:
+
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-profile',
+
+  standalone: true,
+
+  imports: [CommonModule],
+
+  templateUrl: './profile.html',
+  styleUrl: './profile.css'
+})
+
+export class ProfileComponent implements OnInit {
+
+  user: any = null;
+
+  ngOnInit(): void {
+
+    // Browser check
+    if (typeof window !== 'undefined') {
+
+      let data = localStorage.getItem("user");
+
+      if (data) {
+
+        this.user = JSON.parse(data);
+
+      }
+
+    }
+
+  }
+
+}
+--------------------------------------------------
+FINAL RUN COMMAND
+--------------------------------------------------
+
+ng serve
+
+Open Browser:
+
+http://localhost:4200
+
+--------------------------------------------------
+WORKING FLOW
+--------------------------------------------------
+
+1. User registers
+2. Data stored in localStorage
+3. User logs in
+4. Profile component displays user data
+
+--------------------------------------------------
+IMPORTANT VIVA QUESTIONS
+--------------------------------------------------
+
+Q1. What is Angular?
+
+Answer:
+Angular is frontend framework used to build web applications.
+
+--------------------------------------------------
+
+Q2. What is Angular CLI?
+
+Answer:
+Tool used to create and manage Angular projects.
+
+--------------------------------------------------
+
+Q3. What is Component?
+
+Answer:
+Component controls one part of webpage.
+
+--------------------------------------------------
+
+Q4. What is ngModel?
+
+Answer:
+Used for two-way data binding.
+
+--------------------------------------------------
+
+Q5. Why FormsModule is imported?
+
+Answer:
+To use ngModel.
+
+--------------------------------------------------
+
+Q6. What is localStorage?
+
+Answer:
+Browser storage used to store data.
+
+--------------------------------------------------
+
+Q7. What is interpolation?
+
+Answer:
+{{ }} is used to display dynamic data.
+
+--------------------------------------------------
+
+Q8. What does (click) do?
+
+Answer:
+Handles button click event.
+
+--------------------------------------------------
+
+Q9. What is JSON.stringify()?
+
+Answer:
+Converts object into string.
+
+--------------------------------------------------
+
+Q10. What is JSON.parse()?
+
+Answer:
+Converts string into object.
