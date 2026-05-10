@@ -1,0 +1,147 @@
+Here are the similar steps to pull and run a Python image in Docker, based on your Java/OpenJDK example from the PDF. 
+
+Docker + Python Steps
+
+1. Open Docker Desktop
+
+Wait until Docker starts completely.
+
+
+---
+
+2. Check Docker
+
+Open PowerShell and run:
+
+docker -v
+
+
+---
+
+3. Check Existing Images
+
+docker images
+
+
+---
+
+4. Pull Python Image
+
+docker pull python:3.12
+
+Wait for the download to complete.
+
+
+---
+
+5. Check Downloaded Image
+
+docker images
+
+You should see something like:
+
+python    3.12
+
+
+---
+
+6. Run Python Container
+
+docker run --name PYTHON -it -d python:3.12
+
+
+---
+
+7. Check Running Container
+
+docker ps
+
+
+---
+
+8. Open Python Interpreter
+
+docker exec -it PYTHON python
+
+You will see:
+
+Python 3.12 ...
+>>>
+
+
+---
+
+9. Run Python Program
+
+print("Hello Docker")
+
+Output:
+
+Hello Docker
+
+
+---
+
+10. Addition Program
+
+a = 10
+b = 20
+print(a + b)
+
+Output:
+
+30
+
+
+---
+
+11. Exit Python
+
+exit()
+
+or press:
+
+Ctrl + Z
+
+then Enter (Windows)
+
+
+---
+
+12. Stop Container
+
+docker stop PYTHON
+
+
+---
+
+13. Remove Container
+
+docker rm PYTHON
+
+
+---
+
+14. Check Containers
+
+docker ps
+
+
+---
+
+15. Check Images
+
+docker images
+
+
+---
+
+16. Remove Unused Images (Optional)
+
+docker image prune -a
+
+Type:
+
+y
+
+to continue.
