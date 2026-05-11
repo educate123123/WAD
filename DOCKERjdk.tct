@@ -1,0 +1,80 @@
+1. Open Docker Desktop
+Wait until Docker starts completely.
+2. Check Docker
+Open PowerShell and run:
+
+docker -v
+
+3. Check Images
+
+docker images
+
+4. Pull OpenJDK Image
+Use this working command:
+
+docker pull openjdk:27-ea-trixie
+
+Wait for download to complete.
+5. Check Downloaded Image
+
+docker images
+
+You should see:
+openjdk:27-ea-trixie
+6. Run Docker Container
+
+docker run --name JAVA -it -d openjdk:27-ea-trixie
+
+7. Check Running Container
+
+docker ps
+
+8. Open JShell
+
+docker exec -it JAVA jshell
+
+You will see:
+Welcome to JShell
+9. Run Java Program
+
+System.out.println("Hello Docker");
+
+Press Enter.
+10. Addition Program
+
+int a = 10;
+int b = 20;
+System.out.println(a+b);
+
+
+Output:
+30
+11. Exit JShell
+
+/exit
+
+12. Stop Container
+
+docker stop JAVA
+
+13. Remove Container
+
+docker rm JAVA
+
+14. Check Containers
+
+docker ps
+
+15. Check Images
+
+docker images
+
+16. Remove Unused Images (Optional)
+
+docker image prune -a
+
+Type:
+
+y
+
+to continue.
