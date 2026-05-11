@@ -1,0 +1,130 @@
+static-site-app/
+│
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+│
+├── server.js
+├── package.json
+
+mkdir static-site-app
+cd static-site-app
+
+npm init -y
+npm install express
+
+## 2. Create `server.js`
+
+```
+const express = require('express');
+const path = require('path');
+
+const app = express();
+const PORT = 3000;
+
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running at http://localhost:${PORT}`);
+});
+```
+
+---
+
+## 3. Create `public/index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Hello from Node.js!</h1>
+    <p>Your static website is working.</p>
+
+    <button id="btn">Click Me</button>
+
+    <script src="app.js"></script>
+</body>
+</html>
+```
+
+---
+
+## 4. Create `public/style.css`
+
+```css
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 100px;
+    background: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+```
+
+---
+
+## 5. Create `public/app.js`
+
+```javascript
+document.getElementById('btn').addEventListener('click', () => {
+    alert('Button clicked!');
+});
+```
+
+---
+
+## 6. Run the Application
+
+Start the server:
+
+```bash
+node server.js
+```
+
+Open your browser at:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## Optional: Add a Start Script
+
+Update `package.json`:
+
+```json
+"scripts": {
+  "start": "node server.js"
+}
+```
+
+Then run:
+
+```bash
+npm start
+```
+
+---
+
+## Alternative Without Express
+
+You can also serve static files using Node’s built-in `http` module, but Express is simpler and more common for production apps.
