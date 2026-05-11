@@ -1,0 +1,303 @@
+Create a Node.js Application Which Serves a Static Website
+
+We will build a simple Node.js application that serves:
+
+HTML
+CSS
+JavaScript
+Images
+
+using Node.js and Express.js.
+
+What is a Static Website?
+
+A static website contains fixed files:
+
+HTML
+CSS
+JavaScript
+Images
+
+The server simply sends these files to browser.
+
+Example:
+
+Portfolio website
+College website
+Landing page
+Why Use Node.js to Serve Static Website?
+Advantages
+Advantage	Explanation
+Fast	Uses asynchronous architecture
+Lightweight	Easy to setup
+Scalable	Can handle many requests
+Easy Hosting	Can deploy easily
+Single Language	JavaScript for frontend & backend
+STEP 1: Install Node.js
+
+Download and install:
+
+Node.js Official Website
+
+STEP 2: Verify Installation
+
+Open terminal or CMD:
+
+node -v
+
+Check npm:
+
+npm -v
+STEP 3: Create Project Folder
+mkdir StaticWebsite
+cd StaticWebsite
+STEP 4: Initialize Node Project
+npm init -y
+
+This creates:
+
+package.json
+
+Purpose:
+
+Stores project information
+Manages dependencies
+STEP 5: Install Express.js
+npm install express
+
+Why Express?
+
+Simplifies server creation
+Easy routing
+Static file serving support
+STEP 6: Create Folder Structure
+StaticWebsite/
+│
+├── public/
+│   ├── index.html
+│   ├── style.css
+│   ├── script.js
+│   └── images/
+│
+├── server.js
+├── package.json
+STEP 7: Create HTML File
+public/index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Website</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Welcome to Node.js Static Website</h1>
+
+    <button onclick="showMessage()">
+        Click Me
+    </button>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+STEP 8: Create CSS File
+public/style.css
+body{
+    text-align:center;
+    font-family:Arial;
+    background-color:lightblue;
+}
+
+h1{
+    color:darkblue;
+}
+STEP 9: Create JavaScript File
+public/script.js
+function showMessage(){
+    alert("Website is working!");
+}
+STEP 10: Create Server File
+server.js
+const express = require('express');
+
+const app = express();
+
+const path = require('path');
+
+
+// Serve Static Files
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// Server Port
+const PORT = 3000;
+
+
+// Start Server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+Understanding the Code
+1. Import Express
+const express = require('express');
+
+Loads Express framework.
+
+2. Create App
+const app = express();
+
+Creates Express application.
+
+3. Import Path Module
+const path = require('path');
+
+Used for folder/file paths.
+
+4. Serve Static Files
+app.use(express.static(path.join(__dirname, 'public')));
+
+Important line.
+
+Purpose:
+
+Makes files inside public accessible in browser.
+
+Without this:
+
+HTML/CSS/JS won’t load.
+STEP 11: Run Server
+node server.js
+
+Output:
+
+Server running on port 3000
+STEP 12: Open Browser
+
+Visit:
+
+http://localhost:3000
+
+Website will open.
+
+How It Works Internally
+Browser Request
+       ↓
+Node.js Server
+       ↓
+Express Static Middleware
+       ↓
+Reads Files from Public Folder
+       ↓
+Sends Response to Browser
+Advanced Concepts
+1. Serving Multiple Pages
+
+Create:
+
+about.html
+contact.html
+
+Inside public folder.
+
+Access:
+
+localhost:3000/about.html
+2. Add Images
+
+Put image inside:
+
+public/images/
+
+HTML:
+
+<img src="images/photo.jpg">
+3. Add Bootstrap
+
+Use CDN:
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+Purpose:
+
+Responsive UI
+Ready-made components
+
+Entity:
+Bootstrap
+
+4. Custom Routes
+
+Example:
+
+app.get('/api', (req, res) => {
+    res.send("API Working");
+});
+
+Access:
+
+localhost:3000/api
+5. Nodemon (Auto Restart)
+
+Install:
+
+npm install -g nodemon
+
+Run:
+
+nodemon server.js
+
+Purpose:
+
+Automatically restarts server after changes.
+6. Environment Variables
+
+Install dotenv:
+
+npm install dotenv
+
+Create .env
+
+PORT=5000
+
+Use:
+
+require('dotenv').config();
+
+const PORT = process.env.PORT;
+7. Production Deployment
+
+Can deploy on:
+
+Render
+Vercel
+Railway
+Difference Between Static and Dynamic Website
+Static Website	Dynamic Website
+Fixed content	Data changes dynamically
+Faster	More processing
+No database required	Database usually required
+Easy hosting	Complex backend
+Viva Questions
+Q1. Why use Express static middleware?
+
+To serve static files like HTML, CSS, JS, images.
+
+Q2. What is __dirname?
+
+Current project directory path.
+
+Q3. What is middleware?
+
+Functions executed between request and response.
+
+Q4. Why Node.js is preferred?
+
+Because it is:
+
+Fast
+Non-blocking
+Event-driven
+Short Exam Definition
+
+“A Node.js static website application serves HTML, CSS, JavaScript, and media files to users using a web server like Express.js.”
